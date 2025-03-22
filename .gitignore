@@ -2,3 +2,4 @@ example.sql
 go.mod
 go.sum
 main
+lesson/*

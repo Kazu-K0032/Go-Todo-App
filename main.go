@@ -1,7 +1,34 @@
 package main
 
 import (
+	"fmt"
+
+	"gopkg.in/go-ini/ini.v1"
 )
 
+type ConfigList struct {
+	Port      int
+	DbName    string
+	SQLDriver string
+}
+
+var Config ConfigList
+
+func init() {
+	cfg, err := ini.Load("./lesson/config.ini")
+	if err != nil {
+		panic(fmt.Sprintf("設定ファイルの読み込みに失敗しました: %v", err))
+	}
+
+	Config = ConfigList{
+		Port:      cfg.Section("web").Key("port").MustInt(8080),
+		DbName:    cfg.Section("db").Key("name").MustString("example.sql"),
+		SQLDriver: cfg.Section("db").Key("driver").String(),
+	}
+}
+
 func main() {
+	fmt.Println("Port = %v\n", Config.Port)
+	fmt.Println("DbName = %v\n", Config.DbName)
+	fmt.Println("SQLDriver = %v\n", Config.SQLDriver)
 }
