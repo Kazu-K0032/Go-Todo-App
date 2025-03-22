@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
+func init() {
+	fmt.Println("init")
+}
 
 func main() {
-	var i int = 100
-	fmt.Println(i)
+	fmt.Println("Main")
 }
