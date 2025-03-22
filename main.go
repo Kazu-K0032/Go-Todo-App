@@ -28,7 +28,7 @@ func init() {
 }
 
 func main() {
-	fmt.Println("Port = %v\n", Config.Port)
-	fmt.Println("DbName = %v\n", Config.DbName)
-	fmt.Println("SQLDriver = %v\n", Config.SQLDriver)
+	fmt.Printf("Port = %v\n", Config.Port)
+	fmt.Printf("DbName = %v\n", Config.DbName)
+	fmt.Printf("SQLDriver = %v\n", Config.SQLDriver)
 }
