@@ -30,8 +30,7 @@
     "editor.defaultFormatter": "golang.go", // Goのフォーマッターを指定
 
     "editor.codeActionsOnSave": {
-      // ファイル保存時に自動でインポートを整理する（不要なインポートを削除し、必要なものを追加）
-      "source.organizeImports": true
+      "source.organizeImports": "explicit"
     }
   }
 }
