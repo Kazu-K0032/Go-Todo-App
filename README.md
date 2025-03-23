@@ -67,7 +67,7 @@ go run main.go
 
 ### 5. ブラウザでアクセス
 
-```
+```ini
 http://localhost:8080
 ```
 
@@ -75,7 +75,7 @@ http://localhost:8080
 
 ## 🗂 ディレクトリ構成
 
-```
+```ini
 todo-app/
 ├── app/
 │   ├── controllers/     // ルーティングやハンドラー
