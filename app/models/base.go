@@ -26,9 +26,6 @@ func init() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	if err := Db.Ping(); err != nil {
-		log.Fatalln("DBに接続できませんでした。", err)
-	}
 
 	// テーブルが無ければ新規作成
 	cmdU := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
