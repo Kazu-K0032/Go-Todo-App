@@ -1,20 +1,22 @@
-{{define "content"}}
-<form role="form" action="/todos/save" method="post">
-  <div class="lead">TodosCreate</div>
-  <div class="form-group">
-    <textarea
-      class="form-control"
-      name="content"
-      id="content"
-      placeholder="Todoを追加"
-      rows="4"
-    ></textarea>
-    <br />
-    <br />
-    <button class="btn btn-lg btn-primary pull-right" type="submit">
-      作成
-    </button>
-  </div>
-</form>
+{{ define "content" }}
+<div class="container mt-5" style="max-width: 600px;">
+  <h2 class="mb-4 text-center">新しい ToDo を作成</h2>
 
-{{end}}
+  <form role="form" action="/todos/save" method="post">
+    <div class="form-group">
+      <label for="content">内容</label>
+      <textarea
+        class="form-control"
+        name="content"
+        id="content"
+        placeholder="ToDoを追加"
+        rows="4"
+        required
+      ></textarea>
+    </div>
+    <div class="text-right">
+      <button class="btn btn-success mt-2">作成する</button>
+    </div>
+  </form>
+</div>
+{{ end }}

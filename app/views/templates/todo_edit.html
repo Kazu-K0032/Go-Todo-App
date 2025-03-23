@@ -1,22 +1,24 @@
-{{define "content"}} {{.Content}}
+{{ define "content" }}
+<div class="container mt-5" style="max-width: 600px">
+  <h2 class="mb-4 text-center">ToDo の編集</h2>
 
-<form role="form" action="/todos/update/{{.ID}}" method="post">
-  <div class="lead">TodosUpdate</div>
-  <div class="form-group">
-    <textarea
-      class="form-control"
-      name="content"
-      id="content"
-      placeholder="Todoを更新"
-      rows="4"
-    >
-{{.Content}}</textarea
-    >
-    <br />
-    <br />
-    <button class="btn btn-lg btn-primary pull-right" type="submit">
-      更新
-    </button>
-  </div>
-</form>
-{{end}}
+  <form role="form" action="/todos/update/{{.ID}}" method="post">
+    <div class="form-group">
+      <label for="content">内容</label>
+      <textarea
+        class="form-control"
+        name="content"
+        id="content"
+        placeholder="ToDoを更新"
+        rows="4"
+        required
+      >
+{{ .Content }}</textarea
+      >
+    </div>
+    <div class="text-right">
+      <button class="btn btn-primary mt-2">更新する</button>
+    </div>
+  </form>
+</div>
+{{ end }}
