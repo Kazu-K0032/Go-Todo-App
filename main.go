@@ -12,5 +12,5 @@ func TestConnection() {
 
 func main() {
 	fmt.Println(models.Db)
-	go controllers.StartMainServer()
+	controllers.StartMainServer()
 }
