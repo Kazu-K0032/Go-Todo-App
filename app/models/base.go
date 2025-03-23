@@ -44,11 +44,13 @@ func init() {
 	}
 }
 
+// 一意のUUIDを生成する関数
 func createUUID() (uuidobj uuid.UUID) {
 	uuidobj, _ = uuid.NewUUID()
 	return uuidobj
 }
 
+// 文字をSHA-1ハッシュし、16進数の文字列として返す関数
 func Encrypt(plaintext string) (cryptext string) {
 	cryptext = fmt.Sprintf("%x", sha1.Sum([]byte(plaintext)))
 	return cryptext
