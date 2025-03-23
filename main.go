@@ -1,9 +1,8 @@
 package main
 
 import (
-	// "fmt"
-
 	"fmt"
+
 	"todo_app/app/controllers"
 	"todo_app/app/models"
 )

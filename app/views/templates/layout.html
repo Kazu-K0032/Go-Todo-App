@@ -1,3 +1,4 @@
+{{define "layout"}}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,9 +22,9 @@
   </head>
   <body>
     <div class="container text-center">
-      <h1>Top</h1>
-      {{.}}
+        {{template "content" .}}
     </div>
   </body>
   <script src="/static/js/jquery-3.7.1.min.js"></script>
 </html>
+{{end}}
