@@ -22,12 +22,12 @@ func generateHTML(writer http.ResponseWriter, data interface{}, filenames ...str
 	templates.ExecuteTemplate(writer, "layout", data)
 }
 
-func session(writer http.ResponseWriter, request *http.Request) (sess models.Session, err error) {
+func session(_ http.ResponseWriter, request *http.Request) (sess models.Session, err error) {
 	cookie, err := request.Cookie("_cookie")
 	if err == nil {
 		sess = models.Session{UUID: cookie.Value}
 		if ok, _ := sess.CheckSession(); !ok {
-			err = errors.New("Invalid session")
+			err = errors.New("invalid session")
 		}
 	}
 	return
