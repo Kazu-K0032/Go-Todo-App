@@ -1,20 +1,28 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 
 	"todo_app/app/models"
 )
 
 func main() {
-	fmt.Println(models.Db)
+	// fmt.Println(models.Db)
+	// u := &models.User{}
+	// u.Name = "test2"
+	// u.Email = "test2@example.com"
+	// u.PassWord = "testtest"
+	// u.CreateUser()
 
-	u := &models.User{}
-	u.Name = "test"
-	u.Email = "test@example.com"
-	u.PassWord = "testtest"
-	fmt.Println(u)
+	// user, _ := models.GetUser(3)
+	// user.CreateTodo("Third Todo")
 
-	user, _ := models.GetUser(2)
-	user.CreateTodo("First Todo")
+	// user2, _ := models.GetUser(3)
+	// todos, _ := user2.GetTodosByUser()
+	// for _, v := range todos {
+	// 	fmt.Println(v)
+	// }
+
+	t, _ := models.GetTodo(3)
+	t.DeleteTodo()
 }
