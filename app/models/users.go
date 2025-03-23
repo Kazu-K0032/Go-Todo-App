@@ -12,6 +12,7 @@ type User struct {
 	Email     string
 	PassWord  string
 	CreatedAt time.Time
+	Todos     []Todo
 }
 
 type Session struct {
@@ -23,12 +24,12 @@ type Session struct {
 }
 
 func (u *User) CreateUser() (err error) {
-	cmd := `insert into users(
+	cmd := `insert into users (
 		uuid,
 		name,
 		email,
 		password,
-		created_at) values(?,?,?,?,?)`
+		created_at) values (?, ?, ?, ?, ?)`
 
 	_, err = Db.Exec(cmd,
 		createUUID(),
@@ -42,7 +43,6 @@ func (u *User) CreateUser() (err error) {
 	return err
 }
 
-// usersテーブルから引数のIDを元にユーザー情報を取得する関数
 func GetUser(id int) (user User, err error) {
 	user = User{}
 	cmd := `select id, uuid, name, email, password, created_at
@@ -58,7 +58,6 @@ func GetUser(id int) (user User, err error) {
 	return user, err
 }
 
-// User情報を更新する関数
 func (u *User) UpdateUser() (err error) {
 	cmd := `update users set name = ?, email = ? where id = ?`
 	_, err = Db.Exec(cmd, u.Name, u.Email, u.ID)
@@ -68,7 +67,6 @@ func (u *User) UpdateUser() (err error) {
 	return err
 }
 
-// Userを削除する関数
 func (u *User) DeleteUser() (err error) {
 	cmd := `delete from users where id = ?`
 	_, err = Db.Exec(cmd, u.ID)
@@ -78,58 +76,57 @@ func (u *User) DeleteUser() (err error) {
 	return err
 }
 
-// メールアドレスからユーザーを取得する関数(セッションで利用)
 func GetUserByEmail(email string) (user User, err error) {
 	user = User{}
-	cmd := `select id, uuid ,name, email, password, created_at
-		from users where email = ?`
+	cmd := `select id, uuid, name, email, password, created_at
+	from users where email = ?`
 	err = Db.QueryRow(cmd, email).Scan(
 		&user.ID,
 		&user.UUID,
 		&user.Name,
 		&user.Email,
 		&user.PassWord,
-		&user.CreatedAt,
-	)
+		&user.CreatedAt)
+
 	return user, err
 }
 
-// セッションを作成する関数
 func (u *User) CreateSession() (session Session, err error) {
 	session = Session{}
-	cmd1 := `insert into sessions (	
-		uuid,
-		email,
-		user_id,
-		created_at) values(?, ?, ?, ?)`
+	cmd1 := `insert into sessions (
+		uuid, 
+		email, 
+		user_id, 
+		created_at) values (?, ?, ?, ?)`
 
 	_, err = Db.Exec(cmd1, createUUID(), u.Email, u.ID, time.Now())
 	if err != nil {
 		log.Println(err)
 	}
+
 	cmd2 := `select id, uuid, email, user_id, created_at
-		from sessions where user_id = ? and email = ?`
+	 from sessions where user_id = ? and email = ?`
+
 	err = Db.QueryRow(cmd2, u.ID, u.Email).Scan(
 		&session.ID,
 		&session.UUID,
 		&session.Email,
 		&session.UserID,
-		&session.CreatedAt,
-	)
+		&session.CreatedAt)
+
 	return session, err
 }
 
-// セッションがデータベースに存在するか確認する関数
 func (sess *Session) CheckSession() (valid bool, err error) {
-	cmd := `session id, uuid, email, user_id, created_at
-		from sessions where uuid = ?`
+	cmd := `select id, uuid, email, user_id, created_at
+	 from sessions where uuid = ?`
+
 	err = Db.QueryRow(cmd, sess.UUID).Scan(
 		&sess.ID,
 		&sess.UUID,
 		&sess.Email,
 		&sess.UserID,
-		&sess.CreatedAt,
-	)
+		&sess.CreatedAt)
 	if err != nil {
 		valid = false
 		return
@@ -138,4 +135,27 @@ func (sess *Session) CheckSession() (valid bool, err error) {
 		valid = true
 	}
 	return valid, err
+}
+
+func (sess *Session) DeleteSessionByUUID() (err error) {
+	cmd := `delete from sessions where uuid = ?`
+	_, err = Db.Exec(cmd, sess.UUID)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return err
+}
+
+func (sess *Session) GetUserBySession() (user User, err error) {
+	user = User{}
+	cmd := `select id, uuid, name, email, created_at FROM users
+	where id = ?`
+	err = Db.QueryRow(cmd, sess.UserID).Scan(
+		&user.ID,
+		&user.UUID,
+		&user.Name,
+		&user.Email,
+		&user.CreatedAt)
+
+	return user, err
 }

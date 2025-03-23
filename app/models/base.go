@@ -9,6 +9,7 @@ import (
 	"todo_app/config"
 
 	"github.com/google/uuid"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -23,13 +24,12 @@ const (
 )
 
 func init() {
-	Db, err = sql.Open(config.Config.SQLDriver, config.Config.DBName)
+	Db, err = sql.Open(config.Config.SQLDriver, config.Config.DbName)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	// テーブルが無ければ新規作成
-	cmdU := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
+	cmdU := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		uuid STRING NOT NULL UNIQUE,
 		name STRING,
@@ -37,44 +37,31 @@ func init() {
 		password STRING,
 		created_at DATETIME)`, tableNameUser)
 
-	_, err = Db.Exec(cmdU)
-	if err != nil {
-		log.Fatalln("デーブルの作成に失敗しました", err)
-	}
+	Db.Exec(cmdU)
 
-	// テーブルが無ければ新規作成
-	cmdT := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			content TEXT,
-			user_id INTEGER,
-			created_at DATETIME)`, tableNameTodo)
+	cmdT := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		content TEXT,
+		user_id INTEGER,
+		created_at DATETIME)`, tableNameTodo)
 
-	_, err = Db.Exec(cmdT)
-	if err != nil {
-		log.Fatalln("デーブルの作成に失敗しました", err)
-	}
+	Db.Exec(cmdT)
 
-	// セッションテーブル
-	cmdS := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
+	cmdS := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		uuid STRING NOT NULL UNIQUE,
 		email STRING,
 		user_id INTEGER,
 		created_at DATETIME)`, tableNameSession)
 
-	_, err = Db.Exec(cmdS)
-	if err != nil {
-		log.Fatalln("デーブルの作成に失敗しました", err)
-	}
+	Db.Exec(cmdS)
 }
 
-// 一意のUUIDを生成する関数
 func createUUID() (uuidobj uuid.UUID) {
 	uuidobj, _ = uuid.NewUUID()
 	return uuidobj
 }
 
-// 文字をSHA-1ハッシュし、16進数の文字列として返す関数
 func Encrypt(plaintext string) (cryptext string) {
 	cryptext = fmt.Sprintf("%x", sha1.Sum([]byte(plaintext)))
 	return cryptext

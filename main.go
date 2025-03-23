@@ -7,7 +7,10 @@ import (
 	"todo_app/app/models"
 )
 
+func TestConnection() {
+}
+
 func main() {
 	fmt.Println(models.Db)
-	controllers.StartMainSercer()
+	go controllers.StartMainServer()
 }
