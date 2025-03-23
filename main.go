@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"todo_app/config"
+
+	"todo_app/app/controllers"
+	"todo_app/app/models"
 )
 
-func main() {
-	fmt.Println(config.Config.Port)
-	fmt.Println(config.Config.SQLDriver)
-	fmt.Println(config.Config.DBName)
-	fmt.Println(config.Config.LogFile)
+func TestConnection() {
+}
 
-	log.Println("test")
+func main() {
+	fmt.Println(models.Db)
+	controllers.StartMainServer()
 }

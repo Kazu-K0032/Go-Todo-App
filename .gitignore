@@ -1,6 +1,3 @@
-example.sql
-go.mod
-go.sum
 main
-lesson/*
-webapp.log
+debug.log
+webapp.sql
