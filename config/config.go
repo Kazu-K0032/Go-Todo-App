@@ -2,6 +2,7 @@ package config
 
 import (
 	"log"
+
 	"todo_app/utils"
 
 	"gopkg.in/go-ini/ini.v1"
@@ -12,12 +13,13 @@ type ConfigList struct {
 	SQLDriver string
 	DBName    string
 	LogFile   string
+	Static    string
 }
 
 var Config ConfigList
 
 func init() {
-	LoadConfig() // configの読み込み
+	LoadConfig()                          // configの読み込み
 	utils.LoggingSettings(Config.LogFile) // ログファイルの設定
 }
 
@@ -31,5 +33,6 @@ func LoadConfig() {
 		SQLDriver: cfg.Section("db").Key("driver").String(),
 		DBName:    cfg.Section("db").Key("name").String(),
 		LogFile:   cfg.Section("web").Key("logfile").String(),
+		Static:    cfg.Section("web").Key("static").String(),
 	}
 }
