@@ -1,7 +1,11 @@
 {{ define "navbar" }}
-<div class="container">
-  <a href="/">top</a>
-  <a href="/signup">signup</a>
-  <a href="/login">login</a>
-</div>
-{{end}}
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="/">ToDoApp</a>
+    <div>
+      <a class="nav-link d-inline" href="/signup">サインアップ</a>
+      <a class="nav-link d-inline" href="/login">ログイン</a>
+    </div>
+  </div>
+</nav>
+{{ end }}

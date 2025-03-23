@@ -1,12 +1,29 @@
 {{ define "content" }}
-<h1>todo_app</h1>
+<div class="container mt-5">
+  <h1 class="text-center mb-4">ToDo アプリ</h1>
 
-<p>[<a href="/todos/new">Create</a>]</p>
-<hr />
+  <div class="text-right mb-3">
+    <a href="/todos/new" class="btn btn-success">＋ 新しいToDoを作成</a>
+  </div>
 
-{{ range .Todos }}
-<div>{{ .Content }}</div>
-<p>[<a href="/todos/edit/{{.ID}}">Edit</a>]</p>
-<p>[<a href="/todos/delete/{{.ID}}">Delete</a>]</p>
-<hr />
-{{end}} {{end}}
+  {{ if .Todos }}
+    <div class="row">
+      {{ range .Todos }}
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <p class="card-text">{{ .Content }}</p>
+              <div class="d-flex justify-content-end">
+                <a href="/todos/edit/{{.ID}}" class="btn btn-sm btn-outline-primary mr-2">編集</a>
+                <a href="/todos/delete/{{.ID}}" class="btn btn-sm btn-outline-danger">削除</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{ end }}
+    </div>
+  {{ else }}
+    <p class="text-muted text-center">まだToDoは登録されていません。</p>
+  {{ end }}
+</div>
+{{ end }}
