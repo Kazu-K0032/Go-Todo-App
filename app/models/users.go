@@ -49,3 +49,13 @@ func GetUser(id int) (user User, err error) {
 	)
 	return user, err
 }
+
+// User情報を更新する関数
+func (u *User) UpdateUser() (err error) {
+	cmd := `update users set name = ?, email = ? where id = ?`
+	_, err = Db.Exec(cmd, u.Name, u.Email, u.ID)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	return err
+}
