@@ -18,6 +18,7 @@ var err error
 
 const (
 	tableNameUser = "users"
+	tableNameTodo = "todos"
 )
 
 func init() {
@@ -38,7 +39,19 @@ func init() {
 		password STRING,
 		created_at DATETIME)`, tableNameUser)
 
-	_, err := Db.Exec(cmdU)
+	_, err = Db.Exec(cmdU)
+	if err != nil {
+		log.Fatalln("デーブルの作成に失敗しました", err)
+	}
+
+	// テーブルが無ければ新規作成
+	cmdT := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			content TEXT,
+			user_id INTEGER,
+			created_at DATETIME)`, tableNameTodo)
+
+	_, err = Db.Exec(cmdT)
 	if err != nil {
 		log.Fatalln("デーブルの作成に失敗しました", err)
 	}
