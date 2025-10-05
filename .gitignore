@@ -1,3 +1,4 @@
 main
 debug.log
 webapp.sql
+*.tar.gz

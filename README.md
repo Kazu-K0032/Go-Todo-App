@@ -1,14 +1,17 @@
-# ToDoアプリ（Go + SQLite）
+# Go-Todo-App
 
-このアプリは、Go言語とSQLiteを使って作成されたシンプルなToDo管理アプリです。  
+[English](./docs/lang/en.md) | 日本語
+
+このアプリは、Go 言語と SQLite を使って作成されたシンプルな ToDo 管理アプリです。
+
 ユーザー登録、ログイン、タスクの追加・編集・削除といった基本機能を備えています。
 
 ## スクリーンショット
 
-<img src="https://github.com/user-attachments/assets/0780266a-9212-4934-a0e5-c9a1e0cf1bfe" width=400>
-<img src="https://github.com/user-attachments/assets/b890a141-d681-4243-8d42-59da76085b60" width=400>
-<img src="https://github.com/user-attachments/assets/259570a8-fa92-40c0-b5ca-595dfa499241" width=400>
-<img src="https://github.com/user-attachments/assets/7684a9ec-f016-441d-86f5-ea1b2d26898d" width=400>
+<img src="./docs/images/ui-1.png" width=400>
+<img src="./docs/images/ui-2.png" width=400>
+<img src="./docs/images/ui-3.png" width=400>
+<img src="./docs/images/ui-4.png" width=400>
 
 ## 主な機能
 
@@ -23,16 +26,22 @@
 
 ### 前提
 
-- **Go（1.20以上）** がインストールされていること  
-  インストールされていない場合：[Go公式サイト](https://golang.org/dl/) からインストールしてください
+- **Go（1.20 以上）** がインストールされていること  
+  インストールされていない場合：[Go 公式サイト](https://golang.org/dl/) からインストールしてください
+- **GCC コンパイラ** がインストールされていること（SQLite の CGO サポートのため）
+  ```bash
+  sudo apt update
+  sudo apt install -y build-essential
+  ```
+- デフォルトでは起動サーバーは 8080 なので、事前にポートを空けてください
 
 ---
 
 ### 1. リポジトリをクローン
 
 ```bash
-git clone https://github.com/Kazu-K0032/todo-app.git
-cd todo-app
+git clone repogitory
+cd Go-Todo-App
 ```
 
 ---
@@ -45,7 +54,7 @@ go mod tidy
 
 ---
 
-### 3. `config/config.ini` の設定確認  
+### 3. `config/config.ini` の設定確認
 
 現在は以下の設定がされています。ポートなどご自身の環境に合わせて変更してください。
 
@@ -68,6 +77,12 @@ name = webapp.sql
 go run main.go
 ```
 
+**注意**: CGO が有効になっていることを確認してください。環境変数 `CGO_ENABLED=1` が設定されているか、以下のコマンドで確認できます：
+
+```bash
+go env CGO_ENABLED
+```
+
 - 実行時、 `webapp.sql`・`debug.log`が生成されます。
 
 ---
@@ -83,34 +98,8 @@ http://localhost:8080
 
 ---
 
-## ディレクトリ構成
-
-```ini
-todo-app/
-├── app/
-│   ├── controllers/     // ルーティングやハンドラー
-│   ├── models/          // DBモデルやロジック
-│   └── views/           // HTMLテンプレート
-├── config/              // 設定ファイル（INIなど）
-├── static/              // CSS/JS などの静的ファイル
-├── go.mod
-├── main.go
-└── README.md
-```
-
----
-
-## 使用技術
-
-- Go（net/http, html/template）
-- SQLite（軽量なファイルベースDB）
-- Bootstrap（簡単なスタイル適用）
-- jQuery（簡単な動的処理）
-
----
-
 ## メモ・補足
 
-- SQLiteのデータは `webapp.sql` に保存されます
-- セッションはクッキーとDBで管理しています
+- SQLite のデータは `webapp.sql` に保存されます
+- セッションはクッキーと DB で管理しています
 - テンプレートは `layout.html` を共通としてパーツを切り替える構成です
